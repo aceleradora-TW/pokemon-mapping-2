@@ -1,39 +1,14 @@
-
 const response = require("./api")
 
 
-const pokemon = response.moves.map(movimento => movimento.version_group_details)
-
-// bla bla
+const pokemon = response[0].moves.filter(movimento => movimento.version_group_details.filter(level => level.level_learned_at > 0
+  && level.version_group.name == "red-blue").length).map(item_moves => ({
+    name: item_moves.move.name,
+    lv: item_moves.version_group_details[0].level_learned_at,
+  }))
 
 console.log(pokemon)
 
-/*
 
-[
-  {
-    name: 'charmander',
-    types: [ 'fire' ],
-    abilities: [ 'blaze', 'solar-power' ],
-    attributes: {
-      hp: 39,
-      attack: 52,
-      specialAttack: 60,
-      defense: 43,
-      specialDefense: 50,
-      speed: 65
-    },
-    moves: [
-      { name: 'scratch', lv: 1 },
-      { name: 'leer', lv: 15 },
-      { name: 'growl', lv: 1 },
-      { name: 'ember', lv: 9 },
-      { name: 'flamethrower', lv: 38 },
-      { name: 'fire-spin', lv: 46 },
-      { name: 'rage', lv: 22 },
-      { name: 'slash', lv: 30 }
-    ]
-  }
-]
 
-*/
+//const pokemon = response[0].moves.map(movimento => movimento.version_group_details)
