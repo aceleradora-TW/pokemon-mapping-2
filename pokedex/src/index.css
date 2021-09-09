@@ -1,12 +1,17 @@
+
+* { box-sizing: border-box !important;}
+
 .pokedex {
-    display: flex;
-    width: 70%;
+    width: 90%;
     margin: 0 auto;
-    align-items: center;
-    justify-content: space-around;
-    padding-top: 50px;
 }
 
-h1 { margin: 0; padding: 0;}
+.pokedex .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 30px;
+}
 
-* { box-sizing: border-box;}
+body, h1 { margin: 0; padding: 0;}
+

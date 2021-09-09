@@ -19,7 +19,7 @@ export const adapterPokemon = (response) => {
     id: pokemon.id,
     name: pokemon.name.replace("-", " "),
     types: pokemon.types.map(type => type.type.name),
-    abilities: pokemon.abilities.map(ability => ability.ability.name),
+    abilities: pokemon.abilities.map(ability => ability.ability.name.replace("-", " ")),
     attributes: {
       hp: findAttribute(pokemon, 'hp'),
       attack: findAttribute(pokemon, 'attack'),

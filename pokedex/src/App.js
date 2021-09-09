@@ -38,13 +38,15 @@ const App = () => {
 
   return (
     <div className="app">
-      <Search onChange={handleChange} />
       {state ?
         (
           <div className="pokedex">
-            <Perfil pokemon={state} />
-            <Moves moves={state?.moves} />
-            <Attributes attributes={state?.attributes} />
+            <Search onChange={handleChange} />
+            <div className="container">
+              <Perfil pokemon={state} />
+              <Moves moves={state?.moves} />
+              <Attributes attributes={state?.attributes} />
+            </div>
           </div>
         ) : null}
     </div>
