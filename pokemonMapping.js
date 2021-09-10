@@ -9,6 +9,11 @@ const pokemon = response[0].moves.filter(movimento => movimento.version_group_de
 
 console.log(pokemon)
 
+// function teste() {
+//   const pokemon = response.map(rasp => rasp.moves.map(teste2 => teste2.version_group_details.map(teste3 => teste3.version_group.name == "red-blue")))
+//   return console.log(pokemon)
+// }
 
+// teste()
 
 //const pokemon = response[0].moves.map(movimento => movimento.version_group_details)
