@@ -1,10 +1,27 @@
 const zeRoberto = require("./api")
 
-// response obj = forms obj = atributo "name" (tem nome do pokemon) 
+// response obj = forms obj = atributo "name" (tem nome do pokemon)
 // moves obj = version_group_details obj = version-group obj = atributo "name" red-blue
-// abilities obj = ability obj = atributo name 
+// abilities obj = ability obj = atributo name
 // stats = hp, attack, defense, specialDefense, speed
 // types obj = type obj = name
+
+const getTypes = (poke) =>
+  poke.types.map((descobreTipos) => descobreTipos.type.name)
+
+const getAbilities = (poke) =>
+  poke.abilities.map((habilidade) => habilidade.ability.name)
+
+const resultado = (poke) =>
+  poke.map((poke) => {
+    return {
+      name: poke.name,
+      types: getTypes(poke),
+      abilities: getAbilities(poke)
+    }
+  })
+
+console.log(resultado(zeRoberto))
 
 // [
 //     {
