@@ -12,10 +12,14 @@ existente no site `pokeapi`.
 vamos tentar transformar esse objeto na estrutura de objeto que trabalhamos
 anteriormente no exercicio `pokemonObject`
 
-* Observação: Apenas os moves que são da versão `red-blue` devem ser retornados para o objeto.
+* Observações: 
+  - Apenas os moves que são da versão `red-blue` devem ser retornados para o objeto.
+  - Ordenar os moves em ordem crescente
+  - Não devem ser filtrados moves que tenha `move_learn_method.name` igual a `machine` ou `tutor`
 
 ```javascript
 const pokemon = {
+  id: Number,
   name: String,
   types: Array, // Array de string
   abilities: Array, // Array de string
@@ -41,6 +45,7 @@ Um breve `spoiler`, esse é o retorno esperado no final do exercicio:
 ```bash
 [
   {
+    id: 4,
     name: 'charmander',
     types: [ 'fire' ],
     abilities: [ 'blaze', 'solar-power' ],
