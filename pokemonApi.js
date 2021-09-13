@@ -6,22 +6,53 @@ const zeRoberto = require("./api")
 // stats = hp, attack, defense, specialDefense, speed
 // types obj = type obj = name
 
+// poke.moves.filter(move => {
+// version_group_details.filter()
+// })
+
 const getTypes = (poke) =>
   poke.types.map((descobreTipos) => descobreTipos.type.name)
 
 const getAbilities = (poke) =>
   poke.abilities.map((habilidade) => habilidade.ability.name)
 
+const getStats = (poke) => poke.stats.map((stat) => stat.stat.name)
+
+const getStatsValue = (poke) => poke.stats.map((stat) => stat.base_stat)
+
+const createAttributes = (stats, value) => {
+  let obj = {}
+  for (let i = 0; i < stats.length; i++) {
+    obj[stats[i]] = value[i]
+  }
+  return obj
+}
+
+const getMoves = (poke) => {
+  const movesList = poke.moves
+
+  return movesList
+    .filter(
+      (move) =>
+        move.version_group_details.find(
+          (version) => version.version_group.name === "red-blue"
+        ) !== undefined
+    )
+    .map((move) => console.log(move))
+}
+
 const resultado = (poke) =>
   poke.map((poke) => {
     return {
       name: poke.name,
       types: getTypes(poke),
-      abilities: getAbilities(poke)
+      abilities: getAbilities(poke),
+      attributes: createAttributes(getStats(poke), getStatsValue(poke)),
+      moves: getMoves(poke)
     }
   })
 
-console.log(resultado(zeRoberto))
+console.dir(resultado(zeRoberto), { depth: null })
 
 // [
 //     {
