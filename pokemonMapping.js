@@ -1,4 +1,3 @@
-const { types } = require("../../pokemon/Pikachu/Pokemon Pikachu/Pikachu")
 const response = require("./api")
 
 // const pokemon = response[0].moves.filter(movimento => movimento.version_group_details.filter(level => level.level_learned_at
@@ -23,23 +22,26 @@ const retornaTipo = types => {
   return types.map(type => type.type.name)
 }
 
-const retornaAbilities = abilities =>{
+const retornaAbilities = abilities => {
   return abilities.map(habilidade => habilidade.ability.name)
 }
 
-const retornaAtributos = stats =>{
-  return stats.map(atributo => console.log(atributo.base_stat))
+const retornaAtributos = (status, atributos) => {
+  const retornaStatus = status.stats.find(atributo => atributo.stat.name === atributos)
+  return retornaStatus.base_stat
 }
 
 const pokemon = response.map(pkm => {
-  
+
   return {
 
     id: pkm.id,
     name: pkm.name,
     types: retornaTipo(pkm.types),
     abilities: retornaAbilities(pkm.abilities),
-    attributes: retornaAtributos(pkm.stats)
+    attributes: {
+      hp: 
+    }
   }
 })
 
