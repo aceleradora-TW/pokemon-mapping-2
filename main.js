@@ -18,10 +18,12 @@ function pokemon(api) {
     })
     let atributos = api.map(attrib => {
         return attrib.stats.map(status => {
-            for (prop in status.stat.name) {
-                console.log(`status ${prop} = ${status.stat.name}`)
+            for (prop in status.base_stat) {
+                // return status.base_stats.find(base => {
+                //     return 
+                // })
             }
-            return status.stat.name
+            return status.base_stat
         })
     })
     let movimentos = api.map(lista => {
@@ -34,7 +36,7 @@ function pokemon(api) {
         name: nome,
         type: tipos,
         moves: movimentos,
-        attributes: atributos
+        attributes: atributos[0]
     }
     // console.log(map.type)
     // const pokemon = {
