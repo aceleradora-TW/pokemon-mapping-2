@@ -15,7 +15,7 @@ function movesSemMachineESemTutor(move) {
   if (!acharVersaoDoMove) {
     return false
   }
-  return acharVersaoDoMove[move_learn_method].name !== 'machine' && acharVersaoDoMove[move_learn_method].name !== 'tutor'
+  return acharVersaoDoMove["move_learn_method"].name !== 'machine' && acharVersaoDoMove["move_learn_method"].name !== 'tutor'
 }
 const imprimir = api.map(pokemon => ({
   id: pokemon.id,
@@ -33,13 +33,10 @@ const imprimir = api.map(pokemon => ({
   },
   moves: pokemon.moves.filter(pokemon => movesSemMachineESemTutor(pokemon)).map(
     movimento => ({
-      name: movimento.move.name
+      name: movimento.move.name, 
+      lv: movimento["version_group_details"].find(pokemon => procurarVersao(pokemon)).level_learned_at
     })
   )
-
-
-
-
 }))
 console.dir(imprimir, { depth: null })
 
