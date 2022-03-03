@@ -17,11 +17,8 @@ function pokemon(api) {
         })
     })
     let atributos = api.map(attrib => {
-        return attrib.stats.filter(status => {
-            if (status == 39) {
-                return "hp"
-            }
-            console.log(status)
+        return attrib.stats.map(status => {
+
             return status.base_stat
 
         })
@@ -31,18 +28,24 @@ function pokemon(api) {
             return ataques.move.name
         })
     })
-    return {
+    return [{
         id: id,
         name: nome,
         type: tipos,
         moves: movimentos,
-        attributes: atributos[0]
-    }
+        exemplo: atributos[0],
+        attributes: {
+            hp: atributos[0].shift(),
+            attack: atributos[0].shift(1),
+            specialAttack: atributos[0].shift(2)
+
+        }
+    }]
     // console.log(map.type)
     // const pokemon = {
     //     teste: map
 }
-console.log(pokemon(api))
+console.dir(pokemon(api), { depth: null })
 // function id (api){
 //     let id = api.map(numero => {
 //         return numero.id
