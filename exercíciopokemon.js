@@ -17,7 +17,6 @@ function movesSemMachineESemTutor(move) {
   }
   return acharVersaoDoMove[move_learn_method].name !== 'machine' && acharVersaoDoMove[move_learn_method].name !== 'tutor'
 }
-
 const imprimir = api.map(pokemon => ({
   id: pokemon.id,
   name: pokemon.name,
@@ -32,16 +31,14 @@ const imprimir = api.map(pokemon => ({
     specialDefense: encontrarStatus(pokemon, "special-defense"),
     speed: encontrarStatus(pokemon, "speed"),
   },
-  moves: [
-    { name: movesSemMachineESemTutor(pokemon.name) },
-    { name: 'leer', lv: 15 },
-    { name: 'growl', lv: 1 },
-    { name: 'ember', lv: 9 },
-    { name: 'flamethrower', lv: 38 },
-    { name: 'fire-spin', lv: 46 },
-    { name: 'rage', lv: 22 },
-    { name: 'slash', lv: 30 }
-  ]
+  moves: pokemon.moves.filter(pokemon => movesSemMachineESemTutor(pokemon)).map(
+    movimento => ({
+      name: movimento.move.name
+    })
+  )
+
+
+
 
 }))
 console.dir(imprimir, { depth: null })
