@@ -17,13 +17,13 @@ function pokemon(api) {
         })
     })
     let atributos = api.map(attrib => {
-        return attrib.stats.map(status => {
-            for (prop in status.base_stat) {
-                // return status.base_stats.find(base => {
-                //     return 
-                // })
+        return attrib.stats.filter(status => {
+            if (status == 39) {
+                return "hp"
             }
+            console.log(status)
             return status.base_stat
+
         })
     })
     let movimentos = api.map(lista => {
