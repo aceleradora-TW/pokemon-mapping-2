@@ -13,7 +13,7 @@ function pokemon(api) {
     })
     let habilidades = api.map(hab => {
         return hab.abilities.map(abilit => {
-            return abilit.ability
+            return abilit.ability.name
         })
     })
     let atributos = api.map(attrib => {
@@ -25,21 +25,26 @@ function pokemon(api) {
     })
     let movimentos = api.map(lista => {
         return lista.moves.map(ataques => {
-            return ataques.move.name
+            return ataques.version_group_details.map(detalhes => {
+                return detalhes
+            })
+            return "a"
         })
     })
     return [{
         id: id,
-        name: nome,
-        type: tipos,
-        moves: movimentos,
-        exemplo: atributos[0],
+        name: nome[0],
+        type: tipos[0],
+        Ability: habilidades[0],
         attributes: {
             hp: atributos[0].shift(),
             attack: atributos[0].shift(1),
-            specialAttack: atributos[0].shift(2)
-
-        }
+            specialAttack: atributos[0].shift(2),
+            defense: atributos[0].shift(3),
+            specialDefense: atributos[0].shift(4),
+            speed: atributos[0].shift(5)
+        },
+        moves: movimentos,
     }]
     // console.log(map.type)
     // const pokemon = {
