@@ -25,17 +25,24 @@ function pokemon(api) {
     })
     let movimentos = api.map(lista => {
         return lista.moves.map(ataques => {
+            let nomes = ataques.move.name
+            // console.log(teste)
             let detalhes = ataques.version_group_details.map(details => {
+                // let lvl = details.level_learned_at
                 if (details.move_learn_method.name === "level-up" && details.version_group.name === "red-blue") {
                     console.log(ataques.move.name)
                     return ataques.move.name
                 }
-                // return "a"
+
             })
-            return detalhes
+            const TutorMachine = ataques.version_group_details.filter(tutMach => {
+                console.log(tutMach.name == "tutor")
+            })
+            // return teste
             // console.log(detalhes)
         })
     })
+    // console.dir(movimentos, { depth: null })
     return [{
         id: id,
         name: nome[0],
@@ -49,7 +56,9 @@ function pokemon(api) {
             specialDefense: atributos[0].shift(4),
             speed: atributos[0].shift(5)
         },
-        // moves: movimentos
+        moves: [
+            // movimentos
+        ]
     }]
     // console.log(map.type)
     // const pokemon = {
