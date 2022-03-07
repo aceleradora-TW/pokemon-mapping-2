@@ -26,12 +26,14 @@ function pokemon(api) {
     let movimentos = api.map(lista => {
         return lista.moves.map(ataques => {
             let detalhes = ataques.version_group_details.map(details => {
-                if (details.move_learn_method.name === "level-up" || details.move_learn_method.name === "egg") {
-                    console.log(details.move_learn_method)
-                    return details.move_learn_method.name
+                if (details.move_learn_method.name === "level-up" && details.version_group.name === "red-blue") {
+                    console.log(ataques.move.name)
+                    return ataques.move.name
                 }
-                return "a"
+                // return "a"
             })
+            return detalhes
+            // console.log(detalhes)
         })
     })
     return [{
@@ -47,7 +49,7 @@ function pokemon(api) {
             specialDefense: atributos[0].shift(4),
             speed: atributos[0].shift(5)
         },
-        moves: movimentos,
+        // moves: movimentos
     }]
     // console.log(map.type)
     // const pokemon = {
