@@ -24,24 +24,30 @@ function pokemon(api) {
         })
     })
     let movimentos = api.map(lista => {
-        return lista.moves.map(ataques => {
+        return lista.moves.filter(ataques => {
             let nomes = ataques.move.name
-            // console.log(teste)
-            let detalhes = ataques.version_group_details.map(details => {
-                // let lvl = details.level_learned_at
-                if (details.move_learn_method.name === "level-up" && details.version_group.name === "red-blue") {
-                    console.log(ataques.move.name)
-                    return ataques.move.name
-                }
-
+            let detalhes = ataques.version_group_details.filter(details => {
+                let lvl = details.level_learned_at
+                return details.move_learn_method.name !== 'tutor' && details.move_learn_method.name !== 'machine' && details.version_group.name === 'red-blue'
+                // if (details.move_learn_method.name === "level-up" && details.version_group.name === "red-blue") {
+                //     console.log(ataques.move.name)
+                //     return ataques.move.name
+                // }
             })
-            const TutorMachine = ataques.version_group_details.filter(tutMach => {
-                console.log(tutMach.name == "tutor")
-            })
-            // return teste
-            // console.log(detalhes)
+            if (detalhes == ataques.move.name) {
+                console.log(nomes)
+            }
+            console.log(detalhes)
         })
+
     })
+    //const TutorMachine = ataques.version_group_details.filter(tutMach => {
+    //console.log(tutMach.name == "tutor")
+
+    // return teste
+    // console.log(detalhes)
+
+
     // console.dir(movimentos, { depth: null })
     return [{
         id: id,
@@ -51,8 +57,8 @@ function pokemon(api) {
         attributes: {
             hp: atributos[0].shift(),
             attack: atributos[0].shift(1),
-            specialAttack: atributos[0].shift(2),
-            defense: atributos[0].shift(3),
+            specialAttack: atributos[0].shift(3),
+            defense: atributos[0].shift(2),
             specialDefense: atributos[0].shift(4),
             speed: atributos[0].shift(5)
         },
