@@ -1,4 +1,12 @@
-let api = require("./api")
+let apiPokemon = require("./api")
+
+function semMachineEtutor(move) {
+    let details = move["version_group_details"].find(version => version["version_group"].name === "red-blue")
+    if (!details) {
+        return false
+    }
+    return details["move_learn_method"].name !== "machine" && details["move_learn_method"].name !== "tutor"
+}
 function pokemon(api) {
     let id = api.map(numero => {
         return numero.id
@@ -23,29 +31,19 @@ function pokemon(api) {
 
         })
     })
-    let movimentos = api.map(lista => {
-        return lista.moves.filter(ataques => {
-            let nomes = ataques.move.name
-            let detalhes = ataques.version_group_details.filter(details => {
-                let lvl = details.level_learned_at
-                return details.move_learn_method.name !== 'tutor' && details.move_learn_method.name !== 'machine' && details.version_group.name === 'red-blue'
-                // if (details.move_learn_method.name === "level-up" && details.version_group.name === "red-blue") {
-                //     console.log(ataques.move.name)
-                //     return ataques.move.name
-                // }
-            })
-            if (detalhes == ataques.move.name) {
-                console.log(nomes)
-            }
-            console.log(detalhes)
-        })
+    let movimentos = apiPokemon.map(pokemon => ({
 
-    })
+        moves: pokemon.moves.filter(filtro => semMachineEtutor(filtro)).map(moves => ({
+            name: moves.move.name,
+            level: moves["version_group_details"].find(versao => versao["version_group"].name === "red-blue").level_learned_at
+        })).sort()
+
+    }))
     //const TutorMachine = ataques.version_group_details.filter(tutMach => {
     //console.log(tutMach.name == "tutor")
 
     // return teste
-    // console.log(detalhes)
+    // console.log(movimentos)
 
 
     // console.dir(movimentos, { depth: null })
@@ -62,15 +60,13 @@ function pokemon(api) {
             specialDefense: atributos[0].shift(4),
             speed: atributos[0].shift(5)
         },
-        moves: [
-            // movimentos
-        ]
+        movimentos
     }]
     // console.log(map.type)
     // const pokemon = {
     //     teste: map
 }
-console.dir(pokemon(api), { depth: null })
+console.dir(pokemon(apiPokemon), { depth: null })
 // function id (api){
 //     let id = api.map(numero => {
 //         return numero.id
