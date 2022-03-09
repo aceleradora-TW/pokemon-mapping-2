@@ -36,8 +36,7 @@ function pokemon(api) {
         moves: pokemon.moves.filter(filtro => semMachineEtutor(filtro)).map(moves => ({
             name: moves.move.name,
             level: moves["version_group_details"].find(versao => versao["version_group"].name === "red-blue").level_learned_at
-        })).sort()
-
+        }))
     }))
     //const TutorMachine = ataques.version_group_details.filter(tutMach => {
     //console.log(tutMach.name == "tutor")
@@ -52,13 +51,14 @@ function pokemon(api) {
         name: nome[0],
         type: tipos[0],
         Ability: habilidades[0],
+        atributos,
         attributes: {
-            hp: atributos[0].shift(),
-            attack: atributos[0].shift(1),
-            specialAttack: atributos[0].shift(3),
-            defense: atributos[0].shift(2),
-            specialDefense: atributos[0].shift(4),
-            speed: atributos[0].shift(5)
+            hp: atributos[0].sort().shift(),
+            attack: atributos[0].sort().shift(),
+            specialAttack: atributos[0].sort().shift(),
+            defense: atributos[0].sort().shift(),
+            specialDefense: atributos[0].sort().shift(),
+            speed: atributos[0]
         },
         movimentos
     }]
@@ -74,28 +74,10 @@ console.dir(pokemon(apiPokemon), { depth: null })
 //     return id
 // }
 // console.log(id(api))
-const pokEmon = {
-    id: Number,
-    name: String,
-    types: Array, // Array de string
-    abilities: Array, // Array de string
-    attributes: {
-        hp: Number,
-        attack: Number,
-        specialAttack: Number,
-        defense: Number,
-        specialDefense: Number,
-        speed: Number
-    },
-    moves: [
-        {
-            name: String,
-            lv: Number
-        }
-    ]
-}
 
 
-    // let teste2 = b.filter(function (c) {
-    //     return c.moves
-    // })
+
+
+// let teste2 = b.filter(function (c) {
+//     return c.moves
+// })
