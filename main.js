@@ -26,11 +26,10 @@ function pokemon(api) {
     })
     let atributos = api.map(attrib => {
         return attrib.stats.map(status => {
-
             return status.base_stat
-
         })
     })
+    console.log(atributos)
     let movimentos = apiPokemon.map(pokemon => ({
 
         moves: pokemon.moves.filter(filtro => semMachineEtutor(filtro)).map(moves => ({
@@ -38,46 +37,21 @@ function pokemon(api) {
             level: moves["version_group_details"].find(versao => versao["version_group"].name === "red-blue").level_learned_at
         }))
     }))
-    //const TutorMachine = ataques.version_group_details.filter(tutMach => {
-    //console.log(tutMach.name == "tutor")
 
-    // return teste
-    // console.log(movimentos)
-
-
-    // console.dir(movimentos, { depth: null })
     return [{
         id: id,
         name: nome[0],
         type: tipos[0],
         Ability: habilidades[0],
-        atributos,
         attributes: {
-            hp: atributos[0].sort().shift(),
-            attack: atributos[0].sort().shift(),
-            specialAttack: atributos[0].sort().shift(),
-            defense: atributos[0].sort().shift(),
-            specialDefense: atributos[0].sort().shift(),
-            speed: atributos[0]
+            hp: atributos[0][0],
+            attack: atributos[0][1],
+            specialAttack: atributos[0][3],
+            defense: atributos[0][2],
+            specialDefense: atributos[0][4],
+            speed: atributos[0][5]
         },
         movimentos
     }]
-    // console.log(map.type)
-    // const pokemon = {
-    //     teste: map
 }
 console.dir(pokemon(apiPokemon), { depth: null })
-// function id (api){
-//     let id = api.map(numero => {
-//         return numero.id
-//     })
-//     return id
-// }
-// console.log(id(api))
-
-
-
-
-// let teste2 = b.filter(function (c) {
-//     return c.moves
-// })
