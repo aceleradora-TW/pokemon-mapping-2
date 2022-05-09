@@ -1,4 +1,3 @@
-//const response = require('./api')
 const bancoPokApi = require('./api')
 
 const pokemonType =  tipos => {
@@ -8,9 +7,16 @@ const pokemonType =  tipos => {
 const pokemonAbilities =  abilities => {
     return abilities.map(abilitie => abilitie.ability.name)
 }
-//nosso attributes é stats. Temos q fazer desse jeito de cima, mas pegando dois elementos,
-// base_stat e stat, porem temos q pegar antes stat.name, depois p base
-//Eita, vou dar commit logo
+
+const mapeandoAtributos = (status, atributos) => {
+    const getStatus = status.stats.find(atributo => atributo.stat.name === atributos)
+    return getStatus.base_stat
+
+}
+
+const mapeandoMoves = moves => { 
+    return moves
+}
 
 function mapeandoPokemon(pokemons){
     const resultado = pokemons.map(pokemon => {
@@ -20,16 +26,25 @@ function mapeandoPokemon(pokemons){
     types: pokemonType(pokemon.types),
     abilities: pokemonAbilities(pokemon.abilities),
     attributes: {
-      hp: 39,
-      attack: 52,
-      specialAttack: 60,
-      defense: 43,
-      specialDefense: 50,
-      speed: 65
-    }
+      hp: mapeandoAtributos(pokemon,"hp"),
+      attack: mapeandoAtributos(pokemon,"attack"),
+      specialAttack: mapeandoAtributos(pokemon,"special-attack"),
+      defense: mapeandoAtributos(pokemon,"defense"),
+      specialDefense: mapeandoAtributos(pokemon,"special-defense"),
+      speed: mapeandoAtributos(pokemon,"speed")
+    },
+    moves2: mapeandoMoves(pokemon.moves),
+    moves: [
+        { name: 'scratch', lv: 1 },
+        { name: 'leer', lv: 15 },
+        { name: 'growl', lv: 1 },
+        { name: 'ember', lv: 9 },
+        { name: 'flamethrower', lv: 38 },
+        { name: 'fire-spin', lv: 46 },
+        { name: 'rage', lv: 22 },
+        { name: 'slash', lv: 30 }
+      ]
     }})
     return resultado
 }
-
-
-console.log(mapeandoPokemon(bancoPokApi))
+console.dir(mapeandoPokemon(bancoPokApi),{depth: 1000})
