@@ -22,10 +22,21 @@ const mapeandoMoves = moves => {
             name: move.move.name, lv: buscandoMoveLevel(move)
         }))
 }
+/*const teste = mapeandoMoves.sort(function(a,b){
+    return a.lv > b.lv
+})*/
+//console.log(mapeandoMoves(bancoPokApi))
 
 const buscandoMoveLevel = move => {
     return move.version_group_details.find(lv => lv.version_group.name === "red-blue").level_learned_at
 }
+/*
+function ordenarMoves(ordenar){
+    const ordenandoMoves = mapeandoMoves(ordenar)
+    return ordenandoMoves.sort()
+}
+*/
+
 function mapeandoPokemon(pokemons) {
     const resultado = pokemons.map(pokemon => {
         return {
@@ -41,7 +52,9 @@ function mapeandoPokemon(pokemons) {
                 specialDefense: mapeandoAtributos(pokemon, "special-defense"),
                 speed: mapeandoAtributos(pokemon, "speed")
             },
-            moves: mapeandoMoves(pokemon),
+            moves: mapeandoMoves(pokemon)
+            //teste: ordenarMoves(pokemon)
+            
         }
     })
     return resultado
