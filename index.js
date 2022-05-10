@@ -15,7 +15,13 @@ const mapeandoAtributos = (status, atributos) => {
 }
 
 const mapeandoMoves = moves => { 
-    return moves.moves.filter(move => move.version_group_details.find(name => name.version_group.name === "red-blue" && name.move_learn_method.name !== "machine" && name.move_learn_method.name !== "tutor"))
+    return moves.moves.filter(move =>
+        move.version_group_details.find(name =>
+            name.version_group.name === "red-blue" && name.move_learn_method.name !== "machine" && name.move_learn_method.name !== "tutor"))
+        .map(move =>{
+            name: move.move.name,
+
+    })
 }
 
 function mapeandoPokemon(pokemons){
