@@ -19,10 +19,13 @@ const mapeandoMoves = moves => {
         move.version_group_details.find(name =>
             name.version_group.name === "red-blue" && name.move_learn_method.name !== "machine" && name.move_learn_method.name !== "tutor"))
         .map(move => ({
-            name: move.move.name, lv: move.move.lv            
+            name: move.move.name, lv: buscandoMoveLevel(move)
         }))
 }
 
+const buscandoMoveLevel = move => {
+    return move.version_group_details.find(lv => lv.version_group.name === "red-blue").level_learned_at
+}
 function mapeandoPokemon(pokemons) {
     const resultado = pokemons.map(pokemon => {
         return {
@@ -38,17 +41,7 @@ function mapeandoPokemon(pokemons) {
                 specialDefense: mapeandoAtributos(pokemon, "special-defense"),
                 speed: mapeandoAtributos(pokemon, "speed")
             },
-            moves2: mapeandoMoves(pokemon),
-            moves: [
-                { name: 'scratch', lv: 1 },
-                { name: 'leer', lv: 15 },
-                { name: 'growl', lv: 1 },
-                { name: 'ember', lv: 9 },
-                { name: 'flamethrower', lv: 38 },
-                { name: 'fire-spin', lv: 46 },
-                { name: 'rage', lv: 22 },
-                { name: 'slash', lv: 30 }
-            ]
+            moves: mapeandoMoves(pokemon),
         }
     })
     return resultado
