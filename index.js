@@ -52,7 +52,9 @@ function mapeandoPokemon(pokemons) {
                 specialDefense: mapeandoAtributos(pokemon, "special-defense"),
                 speed: mapeandoAtributos(pokemon, "speed")
             },
-            moves: mapeandoMoves(pokemon)
+            moves: mapeandoMoves(pokemon).sort(function(lv1,lv2){
+                return (lv1.lv > lv2.lv) ? 1 : ((lv2.lv > lv1.lv) ? -1 : 0)
+            })
             //teste: ordenarMoves(pokemon)
             
         }
