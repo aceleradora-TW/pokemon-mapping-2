@@ -1,20 +1,41 @@
-const response = require('./api')
+const api = require('./api')
 
-//percorrer o array com o map
-//criar um objeto filtrando os moves red-blue
-//ordenar os moves em ordem crescente
-const filtrarPokemonMovesName = (version_group_details) =>{
-    const version = version_group_details.map( details => details.version_group)
-    return version.filter(version_group=> version_group.name === "red-blue")
+const filtraMovesRedBlue = (versionGroupDetails) => {
+    return versionGroupDetails['version_group'].name === 'red-blue'
 }
 
-const filtrarPokemonMoves = (moves) =>{
-    return moves.map(move => filtrarPokemonMovesName(move.version_group_details))
+const filtrarAttributesPkm = (pokemon, atributoDoMomento) => {
+    const atributos = pokemon.stats.find(status => status.stat.name === atributoDoMomento)
+    return atributos.base_stat
 }
 
-const pokemon = (listaPkm) => {
-    const pkmMoves = listaPkm.map(pkm => filtrarPokemonMoves(pkm.moves))
-    console.dir(pkmMoves, {depth:null})
+const filtraMovesSemMachineTutor = (move) => {
+    const acharVersao = move['version_group_details'].find(version => filtraMovesRedBlue(version))
+    if(!acharVersao){
+        return false
+    }
+    return acharVersao['move_learn_method'].name !== 'tutor' && acharVersao['move_learn_method'].name !== 'machine'
 }
 
-pokemon(response)
+const imprimir = (response) => response.map(pokemon => ({
+    id: pokemon.id,
+    name: pokemon.name,
+    types: pokemon.types.map(tipo => tipo.type.name),
+    abilities: pokemon.abilities.map(habilidade => habilidade.ability.name),
+    attributes: {
+        hp: filtrarAttributesPkm(pokemon, 'hp'),
+        attack: filtrarAttributesPkm(pokemon, 'attack'),
+        specialAttack: filtrarAttributesPkm(pokemon, 'special-attack'),
+        defense: filtrarAttributesPkm(pokemon, 'defense'),
+        specialDefense: filtrarAttributesPkm(pokemon, 'special-defense'),
+        speed: filtrarAttributesPkm(pokemon, 'speed')
+    },
+    moves: pokemon.moves.filter(move => filtraMovesSemMachineTutor(move)).map(
+        movimento => ({
+            name: movimento.move.name,
+            lv: movimento['version_group_details'].find(versao => filtraMovesRedBlue(versao)).level_learned_at
+        })
+    )
+}))
+
+console.dir(imprimir(api), {depth: null});
