@@ -5,7 +5,21 @@ const attributes = (status, nome) => {
     return b_s.base_stat
 }
 
-const moves = () => {}
+const moves = a => { 
+    
+    //a.map(x => x.move.name)
+    let versionGroupDetails = a.filter(y => y.version_group_details.find(y => 
+        y.version_group.name === "red-blue" && 
+        y.move_learn_method.name !== "machine" &&
+        y.move_learn_method.name !== "tutor"))
+    
+    return versionGroupDetails.map(nomeLv => {
+        `name: ${nomeLv.move}`/*, lv: ${nomeLv.versionGroupDetails.level_learned_at}*/
+
+    })
+}
+
+
 
 const imprimeTela = importandoAPI.map(pokemon => {
 
@@ -22,9 +36,7 @@ const imprimeTela = importandoAPI.map(pokemon => {
             specialDefense: attributes(pokemon.stats, "special-defense") ,
             speed: attributes(pokemon.stats, "speed") 
           },
-        moves: [{}
-            
-        ]
+        moves: moves(pokemon.moves)
     }
 })
 console.log(imprimeTela)
