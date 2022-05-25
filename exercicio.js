@@ -6,20 +6,17 @@ const attributes = (status, nome) => {
 }
 
 const moves = a => { 
-    
     //a.map(x => x.move.name)
     let versionGroupDetails = a.filter(y => y.version_group_details.find(y => 
         y.version_group.name === "red-blue" && 
         y.move_learn_method.name !== "machine" &&
-        y.move_learn_method.name !== "tutor"))
-    
-    return versionGroupDetails.map(nomeLv => {
-        `name: ${nomeLv.move}`/*, lv: ${nomeLv.versionGroupDetails.level_learned_at}*/
-
+        y.move_learn_method.name !== "tutor")).map(nomeLv => {
+            
+        return {name: nomeLv.move.name}
+        /*, lv: ${nomeLv.versionGroupDetails.level_learned_at}*/
     })
+    return versionGroupDetails
 }
-
-
 
 const imprimeTela = importandoAPI.map(pokemon => {
 
