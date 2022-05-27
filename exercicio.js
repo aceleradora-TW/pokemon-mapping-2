@@ -15,7 +15,7 @@ const moves = a => {
         return {
             name: nomeLv.move.name,
             lv: nomeLv.version_group_details[0].level_learned_at
-    }   })
+    }   }).sort((a, b) => a.lv - b.lv)
     return versionGroupDetails
 }
 
