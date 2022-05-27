@@ -12,9 +12,10 @@ const moves = a => {
         y.move_learn_method.name !== "machine" &&
         y.move_learn_method.name !== "tutor")).map(nomeLv => {
             
-        return {name: nomeLv.move.name}
-        //, lv: ${nomeLv.versionGroupDetails.level_learned_at}
-    })
+        return {
+            name: nomeLv.move.name,
+            lv: nomeLv.version_group_details[0].level_learned_at
+    }   })
     return versionGroupDetails
 }
 
@@ -36,7 +37,7 @@ const imprimeTela = importandoAPI.map(pokemon => {
         moves: moves(pokemon.moves)
     }
 })
-//console.log(imprimeTela.shift())
+console.log(imprimeTela.shift())
 //console.dir(imprimeTela, {depth: null})
 
 
