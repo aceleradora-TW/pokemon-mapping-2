@@ -1,6 +1,6 @@
-const response = require("./api");
-const {moves} = response[0];
-let pokemon = {
+const response = require("./api")
+const {moves} = response[0]
+let pokemon = [{
   id: Number,
   name: String,
   types: [],
@@ -19,30 +19,22 @@ let pokemon = {
       lv: Number,
     },
   ],
-};
-const updatePokemon = (pos, obj) => {
-  obj.id = response[pos].id;
-  obj.name = response[pos].name;
-  for (let i = 0; i < response[pos].types.length; i++) {
-    obj.types.push(response[pos].types[i].type.name);
+}]
+const getStatus = (obj, status) => {
+  const resultStatus = obj.stats.find(
+    (type) => type.stat.name === status).base_stat
+  return resultStatus
+}
+const getAtributes = (pokemon)=>{
+  return {
+    hp : getStatus(pokemon,'hp'),
+    attack: getStatus(pokemon,'attack'),
+    specialAttack: getStatus(pokemon,'special-attack'),
+    defense: getStatus(pokemon,'defense'),
+    specialDefense: getStatus(pokemon, 'special-defense'),
+    speed: getStatus(pokemon, 'speed')
   }
-  for (let ability of response[pos].abilities) {
-    obj.abilities.push(ability.ability.name);
-  }
-  obj.attributes.attack = getStatus(pos, "attack");
-  obj.attributes.defense = getStatus(pos, "defense");
-  obj.attributes.hp = getStatus(pos, "hp");
-  obj.attributes.specialAttack = getStatus(pos, "special-attack");
-  obj.attributes.specialDefense = getStatus(pos, "special-defense");
-  obj.attributes.speed = getStatus(pos, "speed");
-  obj.moves = getMove(moves);
-};
-const getStatus = (pos, status) => {
-  const resultStatus = response[pos].stats.find(
-    (type) => type.stat.name == status
-  );
-  return resultStatus.base_stat;
-};
+}
 const getMove = (moves)=>{
   const obj = moves.filter((move)=>move.version_group_details.find((detail)=>detail.version_group.name === 'red-blue' &&
       detail.move_learn_method.name !== 'machine' &&
@@ -54,26 +46,17 @@ const getMove = (moves)=>{
     }).sort((a,b)=>a.Lv - b.Lv)
   return obj;
 }
-const getMoveLevel = (pos) => {
-  // let level = [];
-  // const resultMoves = response[pos].moves.map(
-  //   (move) => {
-  //     return move.version_group_details.filter((detail)=>{
-  //       if(detail.version_group.name === 'red-blue' && detail.level_learned_at>0){
-  //         return detail.level_learned_at
-  //       }
-  //     })
-  //   }
-  // );
-  // resultMoves.forEach((moves)=>{
-  //   moves.forEach((move)=>{
-  //     if(move){
-  //       level.push(move.level_learned_at)
-  //     }
-  //   })
-  // });
-  // console.log(level)
-  // return level;
-};
-updatePokemon(0, pokemon);
-console.log(pokemon);
+const updatePokemon = (obj) => {
+  return obj.map(pokemon => {
+    return {id: pokemon.id,
+      name: pokemon.name,
+      types: pokemon.types.map(type=> type.type.name),
+      abilities: pokemon.abilities.map(ability=>ability.ability.name),
+      atributes:getAtributes(pokemon),
+      moves: getMove(pokemon.moves)
+    }  
+  })
+}
+
+pokemon = updatePokemon(response)
+console.dir(pokemon,{depth:99999})
