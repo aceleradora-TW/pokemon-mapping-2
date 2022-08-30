@@ -1,0 +1,30 @@
+.moves {
+    border-radius: 5px;
+    border: 2px solid #e2e2e2;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Fira Sans';
+}
+
+.moves .move {
+    display: flex;
+}
+
+.moves .move:first-child {
+    font-weight: bold;
+    border-bottom: 2px solid #e2e2e2;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.moves .move .level {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moves .move .name {
+    text-transform: capitalize;
+}
