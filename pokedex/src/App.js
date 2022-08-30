@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { adapterPokemon } from './adapters/pokemon-adapter'
+// import { adapterPokemon } from './adapters/pokemon-adapter'
+import { updatePokemon } from './adapters/enzo-adapter'
 import Attributes from './components/attributes'
 import Moves from './components/moves'
 import Perfil from './components/perfil'
@@ -20,7 +21,7 @@ const App = () => {
     fetch(`${urlBase}/${version}/${endpoint}/${pokemonName}`)
       .then(res => res.json())
       .then(res => {
-        const pokemons = adapterPokemon([res])
+        const pokemons = updatePokemon([res])
         setState(pokemons.pop())
       }).catch(err => {
         console.log(err)
@@ -29,7 +30,9 @@ const App = () => {
 
   const handleChange = (event) => {
     const { value } = event.target
-    getPokemon(value)
+    if (value.length > 2) {
+      getPokemon(value)
+    }
   }
 
   useEffect(() => {
