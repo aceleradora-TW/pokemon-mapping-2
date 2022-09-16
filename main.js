@@ -16,3 +16,4 @@ const adapterPokemon = (response) => {
 
 const pokemon = adapterPokemon(response)
 console.dir(pokemon, { depth: 999 })
+console.log()
