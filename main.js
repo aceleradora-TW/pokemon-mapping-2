@@ -16,14 +16,21 @@ const adapterAttributes = (attribute) => {
   }
 }
 
+const getMoves = (moves) => {
+  return moves.map(move => move.version_group_details).map(version => version)
+  }
+  //[0].move_learn_method.name != "machine"||version.version_group_details[0].move_learn_method.name != "tutor" )
+
+
 const adapterPokemon = (response) => {
   return response.map(pokemon => {
     return {
-      name: pokemon.name,
       id: pokemon.id,
+      name: pokemon.name,
       types: adapterElements(pokemon.types, "type"),
       abilities: adapterElements(pokemon.abilities, "ability"),
       attributes:adapterAttributes(pokemon.stats),
+      moves: getMoves(pokemon.moves),
      }
     })
   }
