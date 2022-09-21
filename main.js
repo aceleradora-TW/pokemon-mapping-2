@@ -17,9 +17,10 @@ const adapterAttributes = (attribute) => {
 }
 
 const getMoves = (moves) => {
-  return moves.map(move => move.version_group_details).map(version => version)
-  }
-  //[0].move_learn_method.name != "machine"||version.version_group_details[0].move_learn_method.name != "tutor" )
+  //return moves.map(move => move.version_group_details[0].move_learn_method.name)}
+  return moves.map(move => move.version_group_details.map(e=>e.level_learned_at))}
+
+
 
 
 const adapterPokemon = (response) => {
