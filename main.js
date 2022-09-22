@@ -1,34 +1,36 @@
 const response = require("./api")
 
 const adapterElements = (element, attribute) => {
-  return element.map( elem => elem[attribute].name)
+  return element.map(elem => elem[attribute].name)
 }
 
 const adapterAttributes = (attribute) => {
-  const attributes = attribute.map( elem => elem.base_stat);
+  const attributes = attribute.map(elem => elem.base_stat);
   return {
-      hp: attributes[0],
-      attack: attributes[1],
-      specialAttack: attributes[2],
-      defense: attributes[3],
-      specialDefense: attributes[4],
-      speed: attributes[5]
+    hp: attributes[0],
+    attack: attributes[1],
+    specialAttack: attributes[2],
+    defense: attributes[3],
+    specialDefense: attributes[4],
+    speed: attributes[5]
   }
 }
 
 const getMoves = (moves) => {
-  return moves.filter(move => move.version_group_details.map(elemento => {
-    return {name: elemento.move_learn_method.name,
-            lv: elemento.move_learn_method. }
-
-  }))}
-
-//moves[0].version_group_details[0].level_learned_at (extrair valor)
-
-//moves[0].version_group_details[0].move_learn_method.name (pegar valor e retirar machine,tutor)
-
-//moves[0].version_group_details[0].version_group.name (pegar valor e filtra somente red-blue)
-
+  return moves.map(move => move.version_group_details.filter(element=>{
+    return element.version_group.name == 'red-blue' &&
+            element.move_learn_method.name != 'machine' &&
+            element.move_learn_method.name != 'tutor'
+  }).map(elemento => {
+      return {
+        name: move.move.name,
+        lv: elemento.level_learned_at,
+      }
+    
+  }))
+  .filter(poke=>poke[0]).map(e=>e[0])
+  .sort((lv1, lv2)=>lv1.lv-lv2.lv)
+}
 
 const adapterPokemon = (response) => {
   return response.map(pokemon => {
@@ -37,18 +39,14 @@ const adapterPokemon = (response) => {
       name: pokemon.name,
       types: adapterElements(pokemon.types, "type"),
       abilities: adapterElements(pokemon.abilities, "ability"),
-      attributes:adapterAttributes(pokemon.stats),
+      attributes: adapterAttributes(pokemon.stats),
       moves: getMoves(pokemon.moves),
-     }
-    })
-  }
-
+    }
+  })
+}
 
 const pokemon = adapterPokemon(response)
 console.dir(pokemon, { depth: 999 })
-
-
-
 
 /* saida[{
   name:name move
