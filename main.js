@@ -17,10 +17,17 @@ const adapterAttributes = (attribute) => {
 }
 
 const getMoves = (moves) => {
-  //return moves.map(move => move.version_group_details[0].move_learn_method.name)}
-  return moves.map(move => move.version_group_details.map(e=>e.level_learned_at))}
+  return moves.filter(move => move.version_group_details.map(elemento => {
+    return {name: elemento.move_learn_method.name,
+            lv: elemento.move_learn_method. }
 
+  }))}
 
+//moves[0].version_group_details[0].level_learned_at (extrair valor)
+
+//moves[0].version_group_details[0].move_learn_method.name (pegar valor e retirar machine,tutor)
+
+//moves[0].version_group_details[0].version_group.name (pegar valor e filtra somente red-blue)
 
 
 const adapterPokemon = (response) => {
@@ -39,3 +46,13 @@ const adapterPokemon = (response) => {
 
 const pokemon = adapterPokemon(response)
 console.dir(pokemon, { depth: 999 })
+
+
+
+
+/* saida[{
+  name:name move
+  lv: level move
+}]
+ */
+
