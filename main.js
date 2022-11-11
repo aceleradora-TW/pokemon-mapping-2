@@ -6,7 +6,18 @@ const adptarTipos = (tipos) => tipos.map((tipo) => tipo.type.name)
 
 const adaptarHabilidades = (habilidades) => habilidades.map((habilidade) => habilidade.ability.name)
 
+const adaptarMoves = (movimentos) => {
+  movimentos.map((movimento) => {
+    movimento.version_group_details.find()
+    // movimento.filter(filtrarMovi => filtrarMovi == version_group)
+    console.log(movimento)
+  })
+
+}
+
 const adpatarPkm = (pokemon) => pokemon.map((pkmObj) => {
+
+  console.log(adaptarMoves(pkmObj.moves))
   return {
     id: pkmObj.id,
     name: pkmObj.name,
@@ -22,11 +33,13 @@ const adpatarPkm = (pokemon) => pokemon.map((pkmObj) => {
     },
     moves: [
       {
-        name: String,
+        name: Number,
         lv: Number,
       },
     ],
   }
 })
+//const adaptarMoves = (movimentos) => movimentos.map((movimento) => movimento.moves)
+//adaptarMoves(response.moves)
 console.dir(adpatarPkm(response), { depth: 9999 })
 
