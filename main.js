@@ -1,28 +1,29 @@
 const response = require("./api");
 
-const filtraAtributos = (atributos, statName) =>
-  atributos.find((atributo) => atributo.stat.name === statName);
+const filtraAtributos = (atributos, statName) => atributos.find((atributo) => atributo.stat.name === statName)
 
-const adptarTipos = (tipos) => tipos.map((tipo) => tipo.type.name);
+const adptarTipos = (tipos) => tipos.map((tipo) => tipo.type.name)
 
-const adaptarHabilidades = (habilidades) =>
-  habilidades.map((habilidade) => habilidade.ability.name);
+const adaptarHabilidades = (habilidades) => habilidades.map((habilidade) => habilidade.ability.name)
 
 const adaptarMoves = (movimentos) => {
-  return movimentos
-    .filter((move) => {
-      return move.version_group_details.find((detailsMove) => {
-        return detailsMove.version_group.name === "red-blue";
-        //console.log(detailsMove.version_group.name)
-      });
+  return movimentos.map((move) => move.version_group_details
+    .filter((detailsMove) => {
+      return detailsMove.version_group.name === "red-blue" &&
+        detailsMove.move_learn_method.name !== "machine" &&
+        detailsMove.move_learn_method.name !== "tutor"
     })
     .map((nameRedBlue) => {
       return {
-        name: nameRedBlue.move.name,
-        level: 'lv5'
-      };
-    });
-};
+        name: move.move.name,
+        level: nameRedBlue.level_learned_at
+      }
+    })
+  )
+    .map(() => {
+
+    })
+}
 
 // movimento.filter(filtrarMovi => filtrarMovi == version_group)
 const adpatarPkm = (pokemon) =>
@@ -43,12 +44,7 @@ const adpatarPkm = (pokemon) =>
           .base_stat,
         speed: filtraAtributos(pkmObj.stats, "speed").base_stat,
       },
-      moves: [
-        {
-          name: adaptarMoves(pkmObj.moves),
-          lv: Number,
-        },
-      ],
+      moves: adaptarMoves(pkmObj.moves),
     };
   });
 //const adaptarMoves = (movimentos) => movimentos.map((movimento) => movimento.moves)
