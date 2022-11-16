@@ -1,29 +1,40 @@
 const response = require("./api");
 
-const filtraAtributos = (atributos, statName) => atributos.find((atributo) => atributo.stat.name === statName)
+const filtraAtributos = (atributos, statName) =>
+  atributos.find((atributo) => atributo.stat.name === statName);
 
-const adptarTipos = (tipos) => tipos.map((tipo) => tipo.type.name)
+const adptarTipos = (tipos) => tipos.map((tipo) => tipo.type.name);
 
-const adaptarHabilidades = (habilidades) => habilidades.map((habilidade) => habilidade.ability.name)
+const adaptarHabilidades = (habilidades) =>
+  habilidades.map((habilidade) => habilidade.ability.name);
 
 const adaptarMoves = (movimentos) => {
-  return movimentos.map((move) => move.version_group_details
-    .filter((detailsMove) => {
-      return detailsMove.version_group.name === "red-blue" &&
-        detailsMove.move_learn_method.name !== "machine" &&
-        detailsMove.move_learn_method.name !== "tutor"
-    })
-    .map((nameRedBlue) => {
-      return {
-        name: move.move.name,
-        level: nameRedBlue.level_learned_at
-      }
-    })
-  )
-    .map(() => {
+  return movimentos
+    .map((move) =>
+      move.version_group_details
+        .filter((detailsMove) => {
+          return (
+            detailsMove.version_group.name === "red-blue" &&
+            detailsMove.move_learn_method.name !== "machine" &&
+            detailsMove.move_learn_method.name !== "tutor"
+          );
+        })
+        .map((nameRedBlue) => {
+          return {
+            name: move.move.name,
+            level: nameRedBlue.level_learned_at,
+          };
+        })
+    )
+    .map((finashName) => {
+      finashName.find((test)=>{
+         console.log(test)
+     })
+ 
+    });
 
-    })
-}
+  //.filter((filtrarValueOn) => filtrarValueOn === "") console.log(filtrarValueOn)
+};
 
 // movimento.filter(filtrarMovi => filtrarMovi == version_group)
 const adpatarPkm = (pokemon) =>
