@@ -1,21 +1,27 @@
 const response = require("./api");
 
-const filtraAtributos = (atributos, statName) => atributos.find((atributo) => atributo.stat.name === statName);
+const filtraAtributos = (atributos, statName) =>
+  atributos.find((atributo) => atributo.stat.name === statName);
 
 const adptarTipos = (tipos) => tipos.map((tipo) => tipo.type.name);
 
-const adaptarHabilidades = (habilidades) => habilidades.map((habilidade) => habilidade.ability.name);
+const adaptarHabilidades = (habilidades) =>
+  habilidades.map((habilidade) => habilidade.ability.name);
 
 const adaptarMoves = (movimentos) => {
-  return movimentos.filter((move) => {
-    move.version_group_details.find((detailsMove) => {
-     
-       detailsMove.version_group.name === "red-blue" &&
-        detailsMove.move_learn_method.name !== "machine" &&
-        detailsMove.move_learn_method.name !== "tutor";
-        console.log(detailsMove.version_group.name)
+  return movimentos
+    .filter((move) => {
+      return move.version_group_details.find((detailsMove) => {
+        return detailsMove.version_group.name === "red-blue";
+        //console.log(detailsMove.version_group.name)
+      });
+    })
+    .map((nameRedBlue) => {
+      return {
+        name: nameRedBlue.move.name,
+        level: 'lv5'
+      };
     });
-  });
 };
 
 // movimento.filter(filtrarMovi => filtrarMovi == version_group)
