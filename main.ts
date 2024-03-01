@@ -1,4 +1,4 @@
-const response = require("./api")
+import { response } from "./api"
 
 const adapterAbilities = (abilities) => {
   return abilities.map(ab => ab.ability.name)

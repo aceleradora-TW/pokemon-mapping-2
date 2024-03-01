@@ -1,4 +1,4 @@
-const response = [{
+export const response = [{
  "abilities": [
   {
    "ability": {
@@ -22925,5 +22925,3 @@ const response = [{
  ],
  "weight": 85
 }]
-
-module.exports = response
